@@ -42,6 +42,7 @@ public class DeliveryService implements DeliveryServiceInterface {
     this.deliveryRepository = deliveryRepository;
     this.courierRepository = courierRepository;
     this.warehouseRepository = warehouseRepository;
+    this.deliveryEstimator=deliveryEstimator;
   }
 
   // DI-3. Setter Injection - чрез добавяне на setter метод (използва се за
