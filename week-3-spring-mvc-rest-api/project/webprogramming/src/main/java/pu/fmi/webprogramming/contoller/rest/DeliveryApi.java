@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pu.fmi.webprogramming.exception.DeliveryCustomException;
+import pu.fmi.webprogramming.model.Courier;
 import pu.fmi.webprogramming.model.CreateDeliveryDTO;
 import pu.fmi.webprogramming.model.Customer;
 import pu.fmi.webprogramming.model.Delivery;
@@ -34,6 +35,10 @@ public class DeliveryApi {
 
   // TODO: Добавете ново REST API - PUT '/api/deliveries/{id}/courier'
   // и използвай добавената от теб логика на DeliveryService.assignCourier метода
+  @PutMapping("/{id}/courier")
+  public Delivery setDelivery (@PathVariable long id ,@RequestParam  long courierId){
+      return deliveryServiceInterface.assignCourier(id,courierId);
+  }
 
   @PutMapping("/{id}") // PUT /api/deliveries/{id}?status=
   public boolean updateDeliveryStatus(

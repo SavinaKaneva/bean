@@ -5,6 +5,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/week-2-spring-framework/project/webprogramming/pom.xml" />
+        <option value="$PROJECT_DIR$/week-3-spring-mvc-rest-api/project/webprogramming/pom.xml" />
       </list>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
