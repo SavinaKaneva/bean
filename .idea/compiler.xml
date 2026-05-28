@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="webprogramming (2)" />
         <module name="webprogramming (1)" />
         <module name="webprogramming" />
       </profile>
@@ -15,6 +16,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="webprogramming" options="-parameters" />
       <module name="webprogramming (1)" options="-parameters" />
+      <module name="webprogramming (2)" options="-parameters" />
     </option>
   </component>
 </project>

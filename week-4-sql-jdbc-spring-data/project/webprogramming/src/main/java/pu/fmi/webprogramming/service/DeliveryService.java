@@ -99,43 +99,33 @@ public class DeliveryService implements DeliveryServiceInterface {
   @Override
   public List<Delivery> getDeliveriesBy(DeliveryFilter filter) {
 
-    // TODO: Довършване на имплементацията на метода
-    // (използвайте логика за филтриране, pagination и сортиране)
+    String sortBy = (filter.getSortBy() != null) ? filter.getSortBy() : "createdAt";
+    Sort.Direction direction = Sort.Direction.DESC;
+    String dirParam = filter.getDirection();
 
-    // * Създай Pageable обект от подадения филтър:
-    //    → page (номер на страница)
-    //    → size (размер на страница)
-    //    * Създайте Sort обект oт подадените във филтъра:
-    //        → sortBy (поле за сортиране) - ако не е подадено, то по подразбиране трябва да е createdBy
-    //        → direction (asc / desc) - ако не е подадено, то по подразбиране трябва да е низходящо
+    if ("ASC".equalsIgnoreCase(dirParam)) {
+      direction = Sort.Direction.ASC;
+    } else if ("DESC".equalsIgnoreCase(dirParam)) {
+      direction = Sort.Direction.DESC;
+    }
 
-    // * Имайте предвид всички възможни случаи за филтриране:
-    //    → Ако няма подадени филтри (status и customerId са null):
-    //       - върни всички доставки
-    //    → Ако е подаден само customerId:
-    //       - върни доставки само за този клиент
-    //    → Ако е подаден само status:
-    //       - върни доставки само със съответния статус
-    //    → Ако са подадени и двата филтъра:
-    //       - върни доставки, които отговарят едновременно на status и customerId
+    Sort sort = Sort.by(direction, sortBy);
+    Pageable pageable = PageRequest.of(filter.getPage(), filter.getSize(), sort);
 
-    // * Уверите се, че резултатът винаги е ограничен чрез Pageable
-    // * Уверите се, че резултатът е сортиран според подадения sortBy и direction
-    // * Методът трябва да връща само списък (List<Delivery>), без Page обект
 
-    // ВАЖНО:
-    // * Всички предоставени Unit тестове (GetDeliveriesByDeliveryApiTest) трябва да минават успешно
-    // * Не променяйте сигнатурата на метода
-    // * Не променяй поведението на API-то
+    if (filter.getStatus() == null && filter.getCustomerId() == null) {
+      return deliveryRepository.findAll(pageable).getContent();
+    }
 
-    Sort sort = null;
-    Pageable pageable = PageRequest.of(-1, -1, sort);
+    if (filter.getStatus() != null && filter.getCustomerId() != null) {
+      return deliveryRepository.findByDeliveryStatusAndCustomerId(filter.getStatus(), filter.getCustomerId(), pageable);
+    }
 
-    if (filter.getStatus() != null && filter.getCustomerId() == null) {
+    if (filter.getStatus() != null) {
       return deliveryRepository.findByDeliveryStatus(filter.getStatus(), pageable);
     }
 
-    return null;
+    return deliveryRepository.findByCustomerId(filter.getCustomerId(), pageable);
   }
 
   @Override
